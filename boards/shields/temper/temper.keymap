@@ -18,7 +18,7 @@
 #define ___ &trans
 #define xx &none
 
-#define DEF 0  // layer shortcuts, must match order in which they are defined below
+#define DEF 0  
 #define SYM 1
 #define NAV 2
 #define NUM 3
@@ -177,7 +177,7 @@ ZMK_LAYER(num_layer,
     // ├──────┼──────┼──────┼──────┼──────┤   ├──────┼──────┼──────┼──────┼──────┤
         &trans &trans &trans &trans &trans     &kp N7 &kp N8 &kp N9 &trans &trans
     // ╰──────┼──────┼──────┼──────┼──────┤   ├──────┼──────┼──────┼──────┼──────┤
-                         &trans &trans &to 0      &kp N0 &trans &trans
+                         &trans &trans &to 0      &trans &kp N0 &trans
     //                  ╰──────┴──────┴──────╯   ╰──────┴──────┴──────╯
 )
 
