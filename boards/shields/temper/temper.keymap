@@ -151,7 +151,7 @@ ZMK_LAYER(lower_layer,
     // ├───────┼──────┼──────────┼─────────┼─────────┤├────────┼───────────┼─────────┼──────┼──────┤
         &trans  &trans &kp HASH   &kp GRAVE &kp TILDE  &kp PIPE &kp PERCENT &kp BSLH  &trans &trans
     // ╰───────┼──────┼──────────┼─────────┼─────────┤├────────┼───────────┼─────────┼──────┼──────┤
-                       &kp SEMI   &kp EQUAL &kp GT     &trans   &trans      &trans
+                       &kp SEMI   &kp EQUAL &kp GT     &kp TAB   &trans      &trans
     //                ╰──────────┴─────────┴─────────╯╰────────┴───────────┴─────────╯   
 )
 
