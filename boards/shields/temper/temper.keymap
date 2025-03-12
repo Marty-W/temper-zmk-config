@@ -7,15 +7,16 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/outputs.h>
+
+// Include zmk-helpers
+#include <zmk-helpers/helper.h>
 
 // Layer definitions
 #define DEFAULT 0
 #define LOWER 1
 #define RAISE 2
 #define NUM 3
-#define RGB 4
 
 // Shorter aliases
 #define ___ &trans
@@ -45,37 +46,53 @@
 #define TAPPING_TERM_MS 280
 #define PRIOR_IDLE_MS 150
 
+// Global combo timeout
+#undef COMBO_TERM
+#define COMBO_TERM 50
+
+// Properly implement HRMs using ZMK_HOLD_TAP
+ZMK_HOLD_TAP(hml, 
+    flavor = "balanced"; 
+    tapping-term-ms = <TAPPING_TERM_MS>; 
+    quick-tap-ms = <QUICK_TAP_MS>; 
+    require-prior-idle-ms = <PRIOR_IDLE_MS>;
+    hold-trigger-key-positions = <KEYS_R THUMBS>;
+    hold-trigger-on-release;
+    bindings = <&kp>, <&kp>;
+)
+
+ZMK_HOLD_TAP(hmr, 
+    flavor = "balanced"; 
+    tapping-term-ms = <TAPPING_TERM_MS>; 
+    quick-tap-ms = <QUICK_TAP_MS>; 
+    require-prior-idle-ms = <PRIOR_IDLE_MS>;
+    hold-trigger-key-positions = <KEYS_L THUMBS>;
+    hold-trigger-on-release;
+    bindings = <&kp>, <&kp>;
+)
+
+// Convert combos to ZMK_COMBO format
+ZMK_COMBO(combo_raycast, &kp LG(SPACE), 34 30) // SPACE + BACKSPACE
+ZMK_COMBO(combo_vimesc, &kp ESC, 16 17) // J + K
+ZMK_COMBO(combo_copy, &kp LG(C), 22 23) // X + C
+ZMK_COMBO(combo_paste, &kp LG(V), 23 24) // C + V
+ZMK_COMBO(combo_select_all, &kp LG(A), 21 22) // Z + X
+ZMK_COMBO(combo_lpar, &kp LPAR, 12 23) // D + C (changed from C + V)
+ZMK_COMBO(combo_rpar, &kp RPAR, 13 24) // F + V (changed from V + B)
+ZMK_COMBO(combo_lbkt, &kp LBKT, 12 13) // D + F
+ZMK_COMBO(combo_rbkt, &kp RBKT, 13 14) // F + G
+ZMK_COMBO(combo_lbrc, &kp LBRC, 2 3) // E + R
+ZMK_COMBO(combo_rbrc, &kp RBRC, 3 4) // R + T
+ZMK_COMBO(combo_capsword, &caps_word, 11 12) // S + D
+ZMK_COMBO(combo_num_layer, &to NUM, 16 17 18) // J + K + L
+ZMK_COMBO(combo_nvim_save, &nvim_save, 11 13) // S + F
+
 &caps_word {
     continue-list = <UNDERSCORE BACKSPACE DELETE MINUS>;
 };
 
 / {
     behaviors {
-        // Urob's Timeless Home Row Mods - Standard Implementation
-        hml: homerow_mods_left {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
-            flavor = "balanced";
-            tapping-term-ms = <TAPPING_TERM_MS>;
-            quick-tap-ms = <QUICK_TAP_MS>;
-            require-prior-idle-ms = <PRIOR_IDLE_MS>;
-            hold-trigger-key-positions = <KEYS_R THUMBS>;
-            hold-trigger-on-release;
-        };
-
-        hmr: homerow_mods_right {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
-            flavor = "balanced";
-            tapping-term-ms = <TAPPING_TERM_MS>;
-            quick-tap-ms = <QUICK_TAP_MS>;
-            require-prior-idle-ms = <PRIOR_IDLE_MS>;
-            hold-trigger-key-positions = <KEYS_L THUMBS>;
-            hold-trigger-on-release;
-        };
-
         // Smart backspace: Handle regular, word, or line deletion
         smart_bspc: smart_backspace {
             compatible = "zmk,behavior-mod-morph";
@@ -162,96 +179,6 @@
         };
     };
 
-    // COMBOS
-    combos {
-        compatible = "zmk,combos";
-
-        // Basic combos from QMK config
-        combo_raycast {
-            timeout-ms = <50>;
-            key-positions = <34 30>; // SPACE + BACKSPACE
-            bindings = <&kp LG(SPACE)>;
-        };
-
-        combo_vimesc {
-            timeout-ms = <50>;
-            key-positions = <16 17>; // J + K
-            bindings = <&kp ESC>;
-        };
-
-        combo_copy {
-            timeout-ms = <50>;
-            key-positions = <22 23>; // X + C
-            bindings = <&kp LG(C)>;
-        };
-
-        combo_paste {
-            timeout-ms = <50>;
-            key-positions = <23 24>; // C + V
-            bindings = <&kp LG(V)>;
-        };
-
-        combo_select_all {
-            timeout-ms = <50>;
-            key-positions = <21 22>; // Z + X
-            bindings = <&kp LG(A)>;
-        };
-
-        combo_lpar {
-            timeout-ms = <50>;
-            key-positions = <23 24>; // C + V
-            bindings = <&kp LPAR>;
-        };
-
-        combo_rpar {
-            timeout-ms = <50>;
-            key-positions = <24 25>; // V + B
-            bindings = <&kp RPAR>;
-        };
-
-        combo_lbkt {
-            timeout-ms = <50>;
-            key-positions = <12 13>; // D + F
-            bindings = <&kp LBKT>;
-        };
-
-        combo_rbkt {
-            timeout-ms = <50>;
-            key-positions = <13 14>; // F + G
-            bindings = <&kp RBKT>;
-        };
-
-        combo_lbrc {
-            timeout-ms = <50>;
-            key-positions = <2 3>; // E + R
-            bindings = <&kp LBRC>;
-        };
-
-        combo_rbrc {
-            timeout-ms = <50>;
-            key-positions = <3 4>; // R + T
-            bindings = <&kp RBRC>;
-        };
-
-        combo_capsword {
-            timeout-ms = <50>;
-            key-positions = <11 12>; // S + D
-            bindings = <&caps_word>;
-        };
-
-        combo_num_layer {
-            timeout-ms = <50>;
-            key-positions = <16 17 18>; // J + K + L
-            bindings = <&to NUM>;
-        };
-
-        combo_nvim_save {
-            timeout-ms = <50>;
-            key-positions = <11 13>; // S + F
-            bindings = <&nvim_save>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -307,20 +234,6 @@
      &kp LSHFT    &kp HOME      &kp PG_DN     &kp PG_UP     &kp END       &kp ENTER     &kp KP_ENTER  &kp N1        &kp N2        &kp N3        &kp EQUAL
 // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
                                  &trans        &trans        &to 0         &kp DOT       &kp N0        &kp COMMA
-//                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
-            >;
-        };
-
-        rgb_layer {
-            bindings = <
-// ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-     &kp ESC      &rgb_ug RGB_TOG &rgb_ug RGB_EFF &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_COLOR_HSB(0,100,50) &rgb_ug RGB_COLOR_HSB(120,100,50) &rgb_ug RGB_COLOR_HSB(240,100,50) &trans        &trans
-// ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-     &trans       &trans        &trans        &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SPI &rgb_ug RGB_SPD &trans        &trans        &trans
-// ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-     &trans       &trans        &trans        &trans        &trans        &trans        &trans        &rgb_ug RGB_EFR &trans        &trans        &trans
-// ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                 &rgb_ug RGB_TOG &trans      &trans        &trans        &trans        &trans
 //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
             >;
         };
