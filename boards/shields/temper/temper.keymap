@@ -155,6 +155,7 @@ ZMK_ADAPTIVE_KEY(
         bindings = <&key_repeat>;
         max-prior-idle-ms = <1200>;
         strict-modifiers;
+        zephyr,post-kernel = <25>;
     };)
 
 &caps_word {
