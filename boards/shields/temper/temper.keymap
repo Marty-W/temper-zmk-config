@@ -138,33 +138,6 @@ ZMK_HOLD_TAP(mt_end, bindings = <&masked_end>, <&kp>; MT_CORE)
 MASK_MODS(masked_home, (MOD_LCTL), &kp HOME)
 MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
 
-/* Magic Shift Configuration */
-#define MAGIC_SHIFT &magic_shift LSHFT 0
-ZMK_HOLD_TAP(magic_shift, bindings = <&kp>, <&magic_shift_tap>;
-             flavor = "balanced"; tapping-term-ms = <200>;
-             quick-tap-ms = <QUICK_TAP_MS>;)
-
-/*
- * IMPORTANT FIX:
- * We set zephyr,post-kernel = <25>; at the top level of shift_repeat
- * so it initializes AFTER key_repeat (which is 23 in ZMK).
- */
-ZMK_ADAPTIVE_KEY(
-    shift_repeat,
-    zephyr,post-kernel = <25>;
-
-    bindings = <&sk LSHFT>;
-    repeat {
-        trigger-keys = <A B C D E F G H I J K L M N O P Q R S T U V W X Y Z>;
-        bindings = <&key_repeat>;
-        max-prior-idle-ms = <1200>;
-        strict-modifiers;
-    };
-)
-
-&caps_word {
-    /delete-property/ ignore-modifiers;
-};
 
 /* Smart Layer Configuration */
 #define SMART_NUM &smart_num NUM 0
