@@ -21,6 +21,7 @@
 /* Helper Includes */
 #include "zmk-helpers/helper.h"
 #include "zmk-helpers/key-labels/36.h"
+ 
 #include "zmk-helpers/unicode-chars/greek.dtsi"
 #include "zmk-helpers/unicode-chars/german.dtsi"
 #include "zmk-helpers/unicode-chars/czech.dtsi"
@@ -118,7 +119,6 @@ ZMK_BEHAVIOR(hmr, hold_tap,
     ZMK_COMBO_6(NAME, &hm_combo_##NAME HOLD 0, POS, LAYERS, COMBO_MS, IDLE_MS)
 
 #include "combos.dtsi"
-#include "leader.dtsi"
 
 /* Navigation Configuration */
 #define MT_CORE                                                                \
@@ -209,8 +209,6 @@ ZMK_MOD_MORPH(bs_del, bindings = <&kp BSPC>, <&kp DEL>;
 /* Copy and Leader Behaviors */
 ZMK_TAP_DANCE(copy_cut, bindings = <&kp LC(INS)>, <&kp LC(X)>;
               tapping-term-ms = <200>;)
-
-ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 
 #define CANCEL &kp K_CANCEL
 
@@ -326,4 +324,70 @@ ZMK_BASE_LAYER(Sys,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────╯
                                ___           ___           ___           ,   ___           ___           ___
 //                           ╰─────────────┴─────────────┴─────────────╯ ╰─────────────┴─────────────┴─────────────╯
+)
+
+// Replace hyper macros
+ZMK_MACRO(hyper_1,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&macro_press &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>,
+              <&macro_tap &kp N1>,
+              <&macro_release &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>;
+)
+
+ZMK_MACRO(hyper_2,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&macro_press &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>,
+              <&macro_tap &kp N2>,
+              <&macro_release &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>;
+)
+
+ZMK_MACRO(hyper_3,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&macro_press &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>,
+              <&macro_tap &kp N3>,
+              <&macro_release &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>;
+)
+
+ZMK_MACRO(hyper_4,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&macro_press &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>,
+              <&macro_tap &kp N4>,
+              <&macro_release &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>;
+)
+
+ZMK_MACRO(hyper_5,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&macro_press &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>,
+              <&macro_tap &kp N5>,
+              <&macro_release &kp LSHFT &kp LCTRL &kp LALT &kp LGUI>;
+)
+
+// Replace harp macros
+ZMK_MACRO(nv_harp1,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&kp SPACE>, <&kp N1>;
+)
+
+ZMK_MACRO(nv_harp2,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&kp SPACE>, <&kp N2>;
+)
+
+ZMK_MACRO(nv_harp3,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&kp SPACE>, <&kp N3>;
+)
+
+ZMK_MACRO(nv_harp4,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&kp SPACE>, <&kp N4>;
 )
