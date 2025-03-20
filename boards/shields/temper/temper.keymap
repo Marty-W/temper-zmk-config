@@ -30,11 +30,20 @@
 #define FN 2
 #define NUM 3
 #define SYS 4
+#define MOUSE 5
 
 /* Basic Definitions */
 #define XXX &none
 #define ___ &trans
 #define QUICK_TAP_MS 175
+
+/* Desktop Management Keys */
+#define DSK_PREV &kp LG(LC(LEFT))   // Previous desktop
+#define DSK_NEXT &kp LG(LC(RIGHT))  // Next desktop
+#define DSK_MGR &kp LG(TAB)       // Desktop manager
+#define PIN_APP &kp LG(LC(F))     // Pin application
+#define PIN_WIN &kp LG(LC(W))     // Pin window
+#define VOL_DOWN &kp C_VOL_DN    // Volume down
 
 /* Hyper Key Configuration */
 #define HYPER LS(LC(LA(LGUI)))
@@ -66,13 +75,20 @@ ZMK_BEHAVIOR(hyper_key, hold_tap,
 #define KEYS_R RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RB4
 #define THUMBS LH2 LH1 LH0 RH0 RH1 RH2
 
+/* Mask Mods Helper */
+#define MASK_MODS(NAME, MODS, BINDING) \
+    ZMK_BEHAVIOR(NAME, mod_morph, \
+        mods = <MODS>; \
+        bindings = <BINDING>, <BINDING>; \
+    )
+
 ZMK_BEHAVIOR(hml, hold_tap,
     flavor = "balanced";
     tapping-term-ms = <280>;
     quick-tap-ms = <QUICK_TAP_MS>;
     require-prior-idle-ms = <150>;
     hold-trigger-on-release;
-    hold-trigger-key-positions = <KEYS_R THUMBS>;
+    hold-trigger-key-positions = <RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RB4 LH2 LH1 LH0 RH0 RH1 RH2>;
     bindings = <&kp>, <&kp>;
 )
 
@@ -82,21 +98,22 @@ ZMK_BEHAVIOR(hmr, hold_tap,
     quick-tap-ms = <QUICK_TAP_MS>;
     require-prior-idle-ms = <150>;
     hold-trigger-on-release;
-    hold-trigger-key-positions = <KEYS_L THUMBS>;
+    hold-trigger-key-positions = <LT0 LT1 LT2 LT3 LT4 LM0 LM1 LM2 LM3 LM4 LB0 LB1 LB2 LB3 LB4 LH2 LH1 LH0 RH0 RH1 RH2>;
     bindings = <&kp>, <&kp>;
 )
 
 /* Combo Configuration */
-#define ZMK_COMBO_8(NAME, TAP, POS, LAYERS, COMBO_MS, IDLE_MS, HOLD, SIDE)     \
-    ZMK_BEHAVIOR(hm_combo_##NAME, hold_tap,                                    \
-        flavor = "balanced";                                                    \
-        tapping-term-ms = <280>;                                               \
-        quick-tap-ms = <QUICK_TAP_MS>;                                         \
-        require-prior-idle-ms = <150>;                                         \
-        hold-trigger-on-release;                                               \
-        hold-trigger-key-positions = <SIDE THUMBS>;                            \
-        bindings = <&kp>, <TAP>;                                               \
-    )                                                                          \
+/* Define a custom combo with home row mod functionality */
+#define ZMK_COMBO_8(NAME, TAP, POS, LAYERS, COMBO_MS, IDLE_MS, HOLD, SIDE) \
+    ZMK_BEHAVIOR(hm_combo_##NAME, hold_tap, \
+        flavor = "balanced"; \
+        tapping-term-ms = <280>; \
+        quick-tap-ms = <QUICK_TAP_MS>; \
+        require-prior-idle-ms = <150>; \
+        hold-trigger-on-release; \
+        hold-trigger-key-positions = <LT0 LT1 LT2 LT3 LT4 LM0 LM1 LM2 LM3 LM4 LB0 LB1 LB2 LB3 LB4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RB4 LH2 LH1 LH0 RH0 RH1 RH2>; \
+        bindings = <&kp>, <TAP>; \
+    ) \
     ZMK_COMBO_6(NAME, &hm_combo_##NAME HOLD 0, POS, LAYERS, COMBO_MS, IDLE_MS)
 
 #include "combos.dtsi"
