@@ -25,8 +25,14 @@
 MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
 MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
+ZMK_MACRO(hyper,
+    &kp LC(LA(LS(LG(KC_NO)))) // Sends Ctrl + Alt + Shift + GUI
+)
+
 
 #define DEFAULT 0
+#define SYMBOL 1
+#define NAV 2
 
 # define ______ &trans
 
@@ -38,7 +44,7 @@ ZMK_LAYER(base,
 // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
         &kp Z         &kp X         &kp C         &kp V         &kp B             &kp N         &kp M         &kp COMMA     &kp DOT       &kp SLASH
 // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                   &kp TAB      &kp BSPC    &smart_shft        &kp SPACE      &mo NAV     &to DEFAULT
+                                   &kp TAB      &kp BSPC     &lt 2 ESC          &lt 1 ENT     &kp SPACE      &hyper
 //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
 
