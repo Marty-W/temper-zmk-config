@@ -1,7 +1,0 @@
-/ {
-    pin-controller {
-        i2c0_default {
-            #binding-cells = <1>;
-        };
-    };
-} 
