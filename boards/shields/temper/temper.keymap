@@ -8,6 +8,7 @@
 #include <behaviors.dtsi>
 #include <behaviors/num_word.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
 
 /* Wireless Configuration */
 #ifdef CONFIG_WIRELESS
@@ -253,7 +254,7 @@ MAKE_HYPER_NUM(5)
 
 ZMK_BASE_LAYER(Base,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-    &kp Q         &kp W         &kp E         &kp R         &kp T       ,   &kp Y         &kp U         &kp I         &kp O         &kp P     ,
+     BT_CLR     BT_CLR_ALL    &kp E         &kp R         &kp T       ,   &kp Y         &kp U         &kp I         &kp O         &kp P     ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     &hml LALT A   &hml LGUI S   &hml LCTRL D   &hml LSHIFT F  &kp G      ,   &kp H         &hmr LSHIFT J &hmr LCTRL K  &hmr LGUI L   &hmr LALT SEMI,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
