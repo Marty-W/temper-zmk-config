@@ -8,3 +8,5 @@ Some notes about this config:
 - Navigation layer has vim-like arrow keys
 
 ![Temper Keymap](keymap_img/temper.svg)
+
+force change
